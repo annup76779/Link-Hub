@@ -1,0 +1,3 @@
+# you must have python 3.* installed in you computer system
+flask
+flask_sqlalchemy
