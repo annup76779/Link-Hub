@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <link href="{{url_for('static',filename='link-hub.png')}}" rel="icon"/>
+    <link href="{{url_for('static',filename='css/bootstrap.min.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{url_for('static',filename='css/bootstrap-theme.min.css')}}" rel="stylesheet" type="text/css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static',filename='js/jquery.js')}}"></script>
+    <link href="{{url_for('static',filename='css/notice.css')}}" rel="stylesheet" type="text/css"/>
+    <script src="{{url_for('static',filename='js/jquery.notice.js')}}"></script>
+    <title>{{title}}</title>
+    <script type="text/javascript">
+        function sidebar(){
+            var el = document.getElementById('sidebar');
+            var el2 = document.getElementById("extbody");
+            var show_hide = window.getComputedStyle(el).getPropertyValue('display');
+
+            if (show_hide == 'block'){
+                el.style.display = 'none';
+                el2.style.marginLeft = "0px";
+                el2.classList.remove("col-sm-10");
+                el2.classList.add("col-sm-12");
+            }
+            else{
+                el.style.display = 'block';
+                el2.style.marginLeft = "222px";
+                el2.classList.remove("col-sm-12");
+                el2.classList.add("col-sm-10");
+            }
+        }
+    </script>
+    <style type="text/css">
+        ::-webkit-scrollbar{
+            width:5px;
+        }
+        ::-webkit-scrollbar-track{
+            background:rgb(43,43,43);
+        }
+        ::-webkit-scrollbar-thumb{
+            background:rgb(74,74,74);
+        }
+        #sidebar::-webkit-scrollbar-track{
+            background:none;
+        }
+        #sidebar::-webkit-scrollbar-thumb{
+            background:none;
+        }
+
+        .barr{
+            color:rgb(117,117,117); font-weight:bold; font-size: 23px;cursor:pointer;
+        }
+        #add-link{
+            margin-top:20px;
+            margin-left:10px;
+            background: rgb(43,43,43);
+            padding:22px;
+            width:70%;
+        }
+        #sidebar{
+            position:fixed;
+            margin-top:40px;
+            border-right:2px solid rgba(116,226,46,1);
+            height:623px;
+            background:rgb(59,59,59);
+            z-index:10;
+            overflow-y:scroll;
+        }
+        #sidebar a div{
+            font-size:14px;
+            color:white;
+            width:100%;
+            margin-top:5px;
+        }
+        #sidebar a{
+            text-decoration: none;
+        }
+        #sidebar a div:hover{
+            border-top-right-radius:20px;
+            border-bottom-right-radius:20px;
+            background:rgba(74,74,74,1);
+            color:white;
+        }
+        .header{
+            position:fixed;
+            z-index:15;
+            background:rgb(59,59,59);
+            height:40px;
+        }
+        #extbody{
+            position:relative;
+            min-height:700px;
+            margin-top:40px;
+            margin-left: 222px;
+            color:white;font-weight:bold;
+        }
+        .line{
+            overflow-x:hidden;
+        }
+        .full-line{
+            padding-top:5px;
+            padding-bottom:5px;
+        }
+        .line-link a,.line-link{
+            
+            color:white;
+            font-weight:normal;
+            padding-left:4px;
+            margin-left:2px;
+        }
+        .full-line:hover{
+            color:white;
+            background: rgb(43,43,43);
+        }
+        .delete{
+            display:none;
+            width:20px;
+        }
+        .full-line:hover .delete{
+            display:block;
+        }
+        .form-control{
+            background:rgb(25,25,25);
+            color:grey;
+            font-weight:normal;
+            border:none;
+        }
+        label{
+            color:rgb(117,117,117); font-weight:bold; font-size: 15px;
+        }
+        h3{
+            text-align:center;
+        }
+        .btn{
+            background:none;
+            color: rgb(0,123,255);
+            border:1px solid rgb(0,123,255);
+        }
+    </style>
+</head>
+<body style="background:rgb(25,25,25);">
+    <div class="col-sm-12 main">
+        <div class="row">
+        {% with messages = get_flashed_messages(with_categories = true) %}
+            {% if messages %}
+                {% for category,message in messages %}
+                    <script type="text/javascript">
+                    jQuery(document).ready(function($) {
+                        var text = {{message|tojson}};
+                        var type = {{category|tojson}};
+                        $.notice({
+                            text:text,
+                            type:type,
+                            custom:".notice",
+                            holdup:"3200",
+                            position:"top-right"
+                        });
+                    }); 
+                </script>
+                {% endfor %}
+            {% endif %}
+
+        {% endwith %}
+
+<!-- this is the main content of the page -->
+
+
+            <div class="col-sm-12 header">
+                <span class="barr" onclick="sidebar()">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                </span>
+                <span style="color:rgb(117,117,117); font-weight:bold; font-size: 25px">Link Hub</span>
+                <a href="#add-link" style='position:absolute;right:10px;margin-top:2px;' class='btn btn-primary'>Add-Link</a>
+            </div>
+            <div class='col-sm-12'>
+                <div class="row">
+                    <div class="col-sm-2" id='sidebar'>
+                        {% for i in types %}
+                        <a href="/{{i[0]}}"><div class='col-sm'>{{i[0]}}</div></a>
+                        {% endfor %}
+                    </div>
+                    <!-- this is the display content zone of the page -->
+                    <div class="col-sm-10" id='extbody'>
+                        <form method = "post" action = "/add-link" id='add-link'>
+                            <label>Topic</label> <input type="text" class="form-control" name="topic">
+                            <label>Title</label> <input type="text" class="form-control" name="title">
+                            <label>URL</label>  <input type="url" class="form-control" name="url"><br/>
+                            <input type="submit" class="btn btn-primary">
+                        </form>
+                        <div class="col-sm-12">
+
+                            <div class="row">
+                                <!-- showing links starts here -->
+                                <h3>{{type}}</h3>
+                                {% set line=namespace(number = 1|int) %}
+                                {% for i in links %}
+                                <div class="col-sm-12 full-line">
+                                    <div class="row">
+                                        <div class="col-sm-11 line">
+                                            <div class="col-sm-1" style="width:12px">[{{line.number}}]</div>
+                                            <div class="col-sm-10 line-link"><a target="blank" href="{{i[0]}}">{{i[2]}} || {{i[0]}}</a></div>
+                                        </div>
+                                        <div class="col-sm-1 text-right delete">
+                                            <a href="/delete?key={{i[1]}}">
+                                                Delete
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% set line.number= line.number+1 %}
+                                {% endfor %}
+                                <!-- showing links ends here -->
+                            </div>
+                        
+                        </div>  
+                    </div>
+                </div>
+            </div>
+
+
+
+<!-- here the main content ends -->
+        </div>
+    </div>
+</body>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</html>
