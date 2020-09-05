@@ -21,7 +21,6 @@ class Links(db.Model):
         return f"<Topic:'{self.topic}', Title:'{self.title}', URL:'{self.url}'>"
 
 
-# uncomment the line below 
 db.create_all() 
 
 
