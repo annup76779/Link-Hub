@@ -1,0 +1,153 @@
+.form{
+	margin:3% 0%;
+}
+.mainForm{
+	border-radius:2%;
+	background:#f0f0f0;
+	padding:2% 3%;
+}
+.formHead{
+	font-weight:bold;
+	
+}
+label{
+	font-size:20px;
+}
+input::placeholder,textarea::placeholder,input,textarea,option,select{
+	font-weight:bold;
+	
+}
+input[type=submit]{
+	
+	margin-top:2%;
+	box-shadow:none;
+	color:white;
+	font-size:20px;
+	font-weight:bold;
+	background:#00695c;
+	border:2px solid #00695c;
+	border-radius:20px;
+	margin:0%  25%;
+	width:50%;
+	box-shadow:none;
+	padding:0% 6%;
+	
+}
+
+/* star_css start */
+.rate-area {
+	position: relative;
+  float: left;
+  border-style: none;
+}
+.rate-area label{
+	display: block;
+}
+
+.rate-area:not(:checked) > input {
+  position: absolute;
+  top: -9999px;
+}
+
+.rate-area:not(:checked) > label {
+  float: right;
+  width: 1em;
+  padding-left: 0 .1em;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 250%;
+  color: lightgrey;
+  text-shadow: 1px 1px #bbb;
+  text-align: left;
+}
+
+.rate-area:not(:checked) > label:before { content: '★ '; }
+
+.rate-area > input:checked ~ label {
+  color: gold;
+  text-shadow: 1px 1px #c60;
+}
+
+.rate-area:not(:checked) > label:hover, .rate-area:not(:checked) > label:hover ~ label { color: gold; }
+
+.rate-area > input:checked + label:hover, .rate-area > input:checked + label:hover ~ label, .rate-area > input:checked ~ label:hover, .rate-area > input:checked ~ label:hover ~ label, .rate-area > label:hover ~ input:checked ~ label {
+  color: gold;
+  text-shadow: 1px 1px goldenrod;
+}
+
+/* star_css end */
+
+.stars-lable{
+	position: relative;
+	top:8px;
+}
+.stars{
+	position: relative;
+	top:-8px;
+}
+
+#attach,input[type=file]{
+opacity: 0;
+height:40px;
+max-width: 200px;
+border:2px dashed #00695c;
+cursor: pointer;
+position: relative;
+top:-7px;
+left:-14px;
+
+}
+.attachment{
+max-width: 200px;
+margin-top: 8px;
+/*background-color: #00695c;*/
+border:2px dashed #00695c;
+color:#00695c;
+font-weight: bold;
+font-size: 16px;
+}
+.attachment:hover{
+color:#00695c;
+}
+
+#dismiss{
+position: absolute;
+left:200px;
+font-size: 25px;
+top:5px;
+color: #00695c;
+font-weight: bold;
+display: none;
+}
+
+@media only screen and (max-width:1050px){
+.mainForm{
+		width:100%;
+	}
+}
+
+
+@media only screen and (max-width:765px){
+	label{
+		font-size: 15px;
+	}
+	input[type=file]{
+	    width:100%;
+	}
+	.rate-area:not(:checked) > label{
+		font-size: 200%;
+	}
+	.stars-lable{
+	position: relative;
+	top:22px;
+	}
+	.stars{
+		position: relative;
+		top:-8px;
+		left: 30px;
+	}
+	.show_label{display:block;}
+	input[type=text],input[type=email],input[type=number],input[type=password],select,input[type=date],input[type=file],textarea{margin-top:5px;width:100%;}
+}
+
