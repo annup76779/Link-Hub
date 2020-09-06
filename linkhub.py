@@ -21,6 +21,7 @@ class Links(db.Model):
         return f"<Topic:'{self.topic}', Title:'{self.title}', URL:'{self.url}'>"
 
 
+# uncomment the line below 
 db.create_all() 
 
 
@@ -77,9 +78,9 @@ def add_link():
 
 @app.route("/delete")
 def delete():
-    if request.args.get("key"):
+    if request.args.get("del"):
         try:
-            key_id = int(request.args.get("key",""))
+            key_id = int(request.args.get("del",""))
             Links.query.filter_by(id = key_id).delete()
             db.session.commit()
             flash("Link deleted!","info")
@@ -98,6 +99,14 @@ def delete():
         else:
             return redirect("/")
 
+
+@app.route("/search", methods=["GET"])
+def search():
+    if request.args.get("search"):
+        key = request.args.get("search")
+        feeds = Links.query.with_entities(Links.url,Links.id,Links.title).filter(Links.title.like(f'%{key}%')|Links.topic.like(f'%{key}%')|Links.url.like(f'%{key}%')).all()
+        types = Links.query.with_entities(Links.topic).distinct().all()
+        return render_template("link-hub.html", title=f"Link Hub|{key}", type=key, types=types, links=feeds)
 
 
 if __name__ == "__main__":
