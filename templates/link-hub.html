@@ -135,8 +135,30 @@
         }
         .btn{
             background:none;
-            color: rgb(0,123,255);
-            border:1px solid rgb(0,123,255);
+            color: rgb(117,117,117);
+            border:1px solid rgb(117,117,117);
+        }
+        .btn:hover{
+            background:rgb(117,117,117);
+            color: white;
+            border:1px solid rgb(117,117,117);
+        }
+        .search{
+            position:absolute;
+            left:222px;
+            top:4px;
+        }
+        .search input[type=text]{
+            background:rgb(25,25,25);
+            box-shadow:none;
+            border:none;
+            width:300px;
+            border-radius:3px;
+            padding:5px;
+        }
+        input{
+            color:grey;
+            font-weight:bold;
         }
     </style>
 </head>
@@ -172,6 +194,12 @@
                     <i class="fa fa-bars" aria-hidden="true"></i>
                 </span>
                 <span style="color:rgb(117,117,117); font-weight:bold; font-size: 25px">Link Hub</span>
+                <span class="search">
+                    <form action="/search" role="search">
+                        <input type="text" name="search"/>
+                        <button style="background:transparent;box-shadow: none; border:none;color:rgb(117,117,117);"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </form>
+                </span>
                 <a href="#add-link" style='position:absolute;right:10px;margin-top:2px;' class='btn btn-primary'>Add-Link</a>
             </div>
             <div class='col-sm-12'>
@@ -189,7 +217,7 @@
                             <label>URL</label>  <input type="url" class="form-control" name="url"><br/>
                             <input type="submit" class="btn btn-primary">
                         </form>
-                        <div class="col-sm-12">
+                        <div class="col-sm-12" style="padding-bottom:200px;">
 
                             <div class="row">
                                 <!-- showing links starts here -->
@@ -200,10 +228,10 @@
                                     <div class="row">
                                         <div class="col-sm-11 line">
                                             <div class="col-sm-1" style="width:12px">[{{line.number}}]</div>
-                                            <div class="col-sm-10 line-link"><a target="blank" href="{{i[0]}}">{{i[2]}} || {{i[0]}}</a></div>
+                                            <div class="col-sm-10 line-link"><a target="_blank" href="{{i[0]}}">{{i[2]}} || {{i[0]}}</a></div>
                                         </div>
                                         <div class="col-sm-1 text-right delete">
-                                            <a href="/delete?key={{i[1]}}">
+                                            <a href="/delete?del={{i[1]}}">
                                                 Delete
                                             </a>
                                         </div>
