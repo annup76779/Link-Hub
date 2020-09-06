@@ -50,7 +50,6 @@ def add_link():
             url = request.form.get("url", "")
             if url != "" and url_topic != "" and url_title != "":
                 inputs = Links(topic = url_topic, url = url, title = url_title)
-                print(inputs)
                 db.session.add(inputs)
                 db.session.commit()
                 flash("Link added successfully!", "success")
