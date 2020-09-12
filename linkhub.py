@@ -1,12 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, make_response 
 from flask_sqlalchemy import SQLAlchemy
+import webbrowser
 
 
 app = Flask(__name__)
 app.secret_key = '\x18\xf4\xdf\r\xfd\xbb\xa1%\xe5\xa7\xf8\xad\x85:\xc6U'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///link-hub.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+url = "http://127.0.0.1:5000/"
+webbrowser.open(url)
 db = SQLAlchemy(app)# initalization of database
 
 
@@ -22,7 +24,7 @@ class Links(db.Model):
 
 
 # uncomment the line below 
-db.create_all() 
+# db.create_all() 
 
 
 @app.route('/')
@@ -109,4 +111,4 @@ def search():
 
 
 if __name__ == "__main__":
-    app.run(debug = True)
+    app.run()
