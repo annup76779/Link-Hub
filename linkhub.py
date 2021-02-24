@@ -30,6 +30,7 @@ class Links(db.Model):
 @app.route('/')
 @app.route("/<topics>")
 def linkhub(topics=None):
+    
     if topics:
         title = f"Link Hub|{topics}"
         types = Links.query.with_entities(Links.topic).distinct().all()
@@ -108,6 +109,22 @@ def search():
         feeds = Links.query.with_entities(Links.url,Links.id,Links.title).filter(Links.title.like(f'%{key}%')|Links.topic.like(f'%{key}%')|Links.url.like(f'%{key}%')).all()
         types = Links.query.with_entities(Links.topic).distinct().all()
         return render_template("link-hub.html", title=f"Link Hub|{key}", type=key, types=types, links=feeds)
+
+
+@app.route("/export/<topics>")
+def export(topics = None):
+	if topics:
+		links = Links.query.with_entities(Links.url,Links.title).filter_by(topic = topics).all()
+		file = open(f"{topics}.txt","w")
+		for i in links:
+			file.write(f'{i[1]}:\n{i[0]}\n\n')
+		file.close()
+		flash("exported","success")
+		topic = request.cookies.get("topic", None)
+		if topic:
+		    return redirect(f"/{topic}")
+		else:
+		    return redirect("/")
 
 
 if __name__ == "__main__":
