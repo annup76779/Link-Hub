@@ -1,3 +1,5 @@
 # you must have python 3.* installed in you computer system
-flask
-flask_sqlalchemy
+
+# run the following two commands in you terminal for windows to run it.
+pip install flask
+pip install flask_sqlalchemy
